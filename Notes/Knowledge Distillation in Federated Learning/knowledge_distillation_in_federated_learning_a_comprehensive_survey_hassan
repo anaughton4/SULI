@@ -1,0 +1,117 @@
+# Introduction
+* Federated learning is an approach to distribute machine learning that allows for training machine learning models on decentralized data without data centralization.
+* Several participants collaborate by exchanging model updates rather than sharing raw data, allowing them to train models on sensitive or privacy-preserving data while leveraging multiple participants' collective knowledge.
+* The main difficulty comes from this aggregation phase.
+  * How do we aggregate in such a way as to share as much info with each participant?
+* Non-independent and non-identically distributed (non-IID) data is common in these architectures, causing local models to drift from global ones.
+* Weight aggregation costs resources
+* This parameter-sharing approach does not handle different model structures well, does not personalize for individual clients, and is not great at dealing with system differences.
+* Possible diverse and even conflicting data can make training difficult across local models.
+* Knowledge Distillation (KD) invloves enchancing the performance of a smaller model by imparting knowledge from a larger and more precise model, referred to as the teacher model, to a smaller model, referred to as the student model.
+* This process is called knowledge transfer.
+* Very common practice in model compression, model ensemble, and transfer learning.
+* In FL, KD can be employed to consolidate the information gathered from a large model trained on a central server into a smaller model trained locally on a client device, making communication between clients and the server smoother.
+* Challenges still include limiting the information shared from the teacher model and dealing with differences in the client datasets.
+
+
+
+
+# Motivation
+* This paper covers KD in FL, specifically:
+  * Algorithmic strategies
+  * System-lvel design choices
+  * Empirical outcomes
+  * Privacy concerns
+  * Deployment considerations
+* Abbreviations used and their meanings:
+  * Fl
+    * Federated learning
+  * FL-HI
+    * Federated learning-healthcare informatics
+  * KD
+    * Knowledge distillation
+  * KDM
+    * Knowledge distillation method
+  * FC
+    * Fully connected layer
+  * ASR
+    * Automatic speech recognition
+  * NLP
+    * Natural language processing
+  * Non-IID
+    * Non-independent and identiacally distributed
+  * MH
+    * Model heterogeneity
+  * DH
+    * Data heterogeneity
+  * CC
+    * Communication cost
+
+
+
+
+# Overview of Federated Learning
+## Federated Learning
+* To train a shared global model, FL allows several clients to share and learn from one another's data without requiring each client to provide its data to the network.
+* Every process in FL is monitored and processed by the same central server.
+* At the start of each cycel, each client receives updates on the global model from the server.  Then, the model is trained locally on each client, and only model updates are sent to the server.
+* Then the server aggregates the alterations performed on all clients and generates an update to the global model, ending the current cycle.
+* No data has to be aggregated to one device.  The data is decentralized.
+
+
+
+## Basics of Federated Learning
+* FL method involves using a central server to coordinate the process of training a model using data that each remote device has locally collected.
+* To ensure data privacy, only model weights are shared to the server.
+* Each model's weights are aggregated at the server and then returend to each local model.
+* There are N users {U_1, ..., U_N} who each have their own database {D_1, ... , D_N}.  U_1 cannot access database D_2 for example.
+* Three steps from here:
+  * The initial model is distributed to each device by the server.
+  * The user U_i trains its model W_i using its local data D_i without sharing the data
+  * The global model W_g is created by aggregating the local models {W_1, ... , W_N}, which is used to update the local models in step one again.
+
+
+
+## Steps of Federated Learning
+* Initializing the global model.
+  * Denoted as W_g_0.  
+  * Distributed to all local models.
+* Local model update
+  * Following the distribution of the current global model W_g_t (t denotes the number of training rounds) by the server, each user U_i updates their model W_i_t by optimizing the parameters to minimize the local loss function F_u (W_u_t).
+  * Updated weights are sent back to the server.
+
+
+
+
+## Federated Averaging
+* Federated averaging is the fundamental algorithm for FL.  It is known as FedAvg.
+* FedAvg uses an architecture composed of client and server components.
+* The server (aggregator) broadcasts the current global model paramters (participants) to some online clients at the start of the cycle.  Each student locally updates the model parameters using its unique information (the difference between the received and privately refined model parameters) before sending an update to the server.  The server takes updates from the feed and then aggregates the gathered contributions using an established method (in the case of FedAvg, a weighted average based on the number of local examples maintained by the clients).  An updated version of the global model is generated by applying a "pseudo-gradient" to the aggregated changes.
+* Problems with FedAvg:
+  * FedAvg requires all clients to utilize the same neural architecture, which may not be possible with varying hardware.
+  * Sharing model parameters and updates can be time-consuming and expensive.
+  * Due to clients having different datasets, the divergence of local models from the global model can hurt aggregation.
+* KD can be used as an alternative to general FedAvg and parameter sharing.
+* It can solve model/data hetergeneity and lower communication costs.
+* KD was made through the exchange of outputs generated by the model or intermediate representations that are not specific to the model instead of directly transfering the actual paramters or updates of the model.
+
+
+
+
+# Overview of Knowledge Distillation
+## Knowledge Distillation
+* KD is a transfer learning method, using knowledge from a more robust teacher network to train a smaller student network.
+* The objective of KD is to aquire a small network of students from a large teach network.
+* The fundamental objective is the facilitate the student model in emulating the ultimate output of the teacher model with utmost accuracy and fidelity.
+* The three main architectures of KD are:
+  * Response based
+  * Feature Based
+  * Relation Based
+
+
+
+## Response-Based Method
+* 
+
+
+https://link.springer.com/article/10.1007/s10791-025-09657-4#Fig1

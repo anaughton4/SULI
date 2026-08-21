@@ -1,0 +1,17 @@
+export LD_LIBRARY_PATH="${NCCL_HOME}/lib:${LD_LIBRARY_PATH}"
+export NCCL_DEBUG=INFO
+
+# 🛑 STRIP GUI VARIABLES TO PREVENT X11 AUTHORIZATION ERRORS
+unset DISPLAY
+unset XAUTHORITY
+
+mpirun -np 2 --hostfile hosts.txt \
+  --mca plm_rsh_agent "ssh -o StrictHostKeyChecking=no" \
+  -x LD_LIBRARY_PATH \
+  -x NCCL_DEBUG \
+  ./nccl-tests/build/all_reduce_perf_mpi -b 8 -e 256M -f 2 -g 1
+
+
+
+Command to fix the Autorized access denied
+  export HWLOC_COMPONENTS="-gl,-x11,-cuda,-nvml"
