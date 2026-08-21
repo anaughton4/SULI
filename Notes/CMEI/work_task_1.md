@@ -1049,3 +1049,31 @@ Start-Process -FilePath "C:\phenix\ghosts\ghosts.exe" -WorkingDirectory "C:\phen
                       root/root|root
                     commands:
                       - mkdir /opt/test; exit;
+
+
+
+* RDP handler:
+{
+            "HandlerType": "Rdp",
+            "HandlerArgs": {
+                "CredentialsFile": "C:\\phenix\\ghosts\\config\\credentials.json",
+                "mouse-sleep-time": 10000,
+                "execution-time": 600,
+                "execution-probability": 100,
+                "delay-jitter": 50
+            },
+            "Initial": "",
+            "UtcTimeOn": "00:00:00",
+            "UtcTimeOff": "24:00:00",
+            "Loop": false,
+            "TimeLineEvents": [
+                {
+                    "Command": "random",
+                    "CommandArgs": [
+                        "10.68.30.19|engineer"
+                    ],
+                    "DelayAfter": 200,
+                    "DelayBefore": 0
+                }
+            ]
+        }

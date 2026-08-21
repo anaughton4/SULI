@@ -11,7 +11,7 @@
 
 ## Meeting
 * Try FL for much more rounds
-  * Use federated average.
+  * Use federated weighted average.
 * DO a local training on a non-ddos/flood scenarios set
 * Try FL for a mix of DDos/Flood and non-DDoS/Flood scenarios across clients (one client is ddos and one client is non ddos).
 * Start shifting into simple models (Decision trees)
