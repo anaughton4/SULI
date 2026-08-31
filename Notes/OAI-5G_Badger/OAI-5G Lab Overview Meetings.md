@@ -19,3 +19,31 @@
 * Main Goals moving into this next week:
   * Continue converting everything into parquet data and polars data modeling.
   * Start federated learning for DDoS/Flood scenarios.
+
+
+
+# Meeting 4: August 20
+* Try FL for much more rounds
+  * Use federated weighted average.
+* DO a local training on a non-ddos/flood scenarios set
+* Try FL for a mix of DDos/Flood and non-DDoS/Flood scenarios across clients (one client is ddos and one client is non ddos).
+* Start shifting into simple models (Decision trees)
+
+
+
+
+# Meeting 5: August 27
+* Questions:
+  * What are the next steps?
+    * Hetergeneous Fl?
+    * Deployment via xApp?
+    * RL?
+* Look into libraries Dice and Shap
+  * Good for understanding what each feature is impacting the prediciton
+* Task for next week:
+  * Try to do multi-class classification
+  * Get results/tables for all models done so far.
+    * Put into a word document for Abijeet to write on
+  * a. Document the threat types b. Document the feature correlation study. c. Get the results for different local models trained on. d. Get the results on the FL training (per round loss/prediction scores)
+  * Once that is done we venture multi-class detection and/or explainable fl using Shapley and Dice
+  * Data extraction and scenario explanation
