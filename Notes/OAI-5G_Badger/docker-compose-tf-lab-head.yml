@@ -1,0 +1,21 @@
+services:
+  tensorflow-lab:
+    # Need CUDA driver to be downgraded to version 12.2 for TF 2.x compatibility on ARM64. The image tag reflects this requirement.
+    # DGX spark has compatibitlity up to version 13.0, but TF 2.x does not support CUDA 13.0 on ARM64, hence we use 12.2 for optimal performance and compatibility.
+    # Optimized for aarch64 (ARM64) and TF 2.x
+    image: nvcr.io/nvidia/tensorflow:23.10-tf2-py3  
+    container_name: tf-lab
+    network_mode: host
+      
+    volumes:
+      # Map your host notebooks folder to the container
+      - ./notebooks:/workspace/notebooks
+    working_dir: /workspace/notebooks
+              
+
+    command: >
+      bash -c "pip install jupyterlab confluent_kafka joblib \"numpy<2.0\" gymnasium stable-baselines3 \"ray[default]\" flwr \"wandb==0.15.12\"  torchvision \"pyarrow==17.0.0\" tqdm && 
+               pip install \"protobuf<4.0\" --force-reinstall &&
+               ray start --head --port=6379 && 
+               jupyter lab --ip=10.10.100.23 --port=8888 --no-browser --allow-root --NotebookApp.token='badgers-based-lab'"
+    restart: unless-stopped

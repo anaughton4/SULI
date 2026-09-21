@@ -1,0 +1,29 @@
+services:
+  tensorflow-lab:
+    # Optimized for aarch64 (ARM64) and TF 2.x
+    image: nvcr.io/nvidia/tensorflow:23.10-tf2-py3  
+    container_name: tf-lab
+    network_mode: host
+    environment:
+      - WANDB_API_KEY=${WANDB_API_KEY}
+    volumes:
+      # Map your host notebooks folder to the container
+      - ./notebooks:/workspace/notebooks
+    working_dir: /workspace/notebooks
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    command: >
+      bash -c "
+      apt-get update && 
+      DEBIAN_FRONTEND=noninteractive apt-get install -y tshark default-jre libgomp1 && 
+      pip install jupyterlab confluent_kafka joblib 'numpy<2.0' gymnasium stable-baselines3 'ray[default]' flwr 'wandb==0.15.12' matplotlib pymongo flask requests 'setuptools<82' keras_tuner seaborn h2o statsmodels polars optuna feature-engine torchvision \"pyarrow==17.0.0\" && 
+      pip install 'protobuf<4.0' --force-reinstall && 
+      ray start --address='10.10.100.23:6379' --num-gpus=1 && 
+      jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token='badgers-based-lab'
+      "
+    restart: unless-stopped 

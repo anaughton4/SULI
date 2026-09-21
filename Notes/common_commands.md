@@ -39,6 +39,8 @@
   * ps aux | grep python
 * Getting into tensorboard through the jupyterlab environment:
   * tensorboard --logdir <path_to_logs> --port 6006
+* Watching the GPU more closely:
+  * nvidia-smi dmon -i 0 -s u
 
 
 

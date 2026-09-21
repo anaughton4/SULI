@@ -47,3 +47,17 @@
   * a. Document the threat types b. Document the feature correlation study. c. Get the results for different local models trained on. d. Get the results on the FL training (per round loss/prediction scores)
   * Once that is done we venture multi-class detection and/or explainable fl using Shapley and Dice
   * Data extraction and scenario explanation
+
+
+
+
+# Meeting 6: September 2
+* Add section explaining the different tables and features
+* Add FL results to paper outline
+* Run FL for Non-DDoS and Flood Scenarios
+
+
+
+# Meeting 7: September 9
+* Get graphs on FL (DDoS and non-DDoS)
+* Start multi-class classification
